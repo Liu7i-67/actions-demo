@@ -4,12 +4,7 @@ on:
     branches:
       - main
 permissions:
-  contents: read
-  pages: write
-  id-token: write
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+  contents: write
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -24,12 +19,8 @@ jobs:
       run: |
           pnpm install
           pnpm run build
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
       with:
-        path: './dist'
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v1
+        folder: dist
+    
