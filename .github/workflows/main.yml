@@ -8,15 +8,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
-      uses: actions/checkout@main
+      uses: actions/checkout@v3
     - name: Add Pnpm 
       uses: pnpm/action-setup@v2.2.2
       with:
         version: 7.18.0
-    - name: Build and Deploy
-      uses: JamesIves/github-pages-deploy-action@master
-      env:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: build
-        BUILD_SCRIPT: pnpm install && pnpm run build
+    - name: Install and Build
+      run: |
+          pnpm install
+          pnpm run build
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@v4
+      with:
+        folder: build
+        ssh-key: ${{ secrets.ACCESS_TOKEN }}
