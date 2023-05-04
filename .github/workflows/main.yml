@@ -9,17 +9,17 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout
+    - name: 1-检出代码
       uses: actions/checkout@v3
-    - name: Add Pnpm 
+    - name: 2-安装pnpm
       uses: pnpm/action-setup@v2.2.2
       with:
         version: 7.18.0
-    - name: Install and Build
-      run: |
-          pnpm install
-          pnpm run build
-    - name: Deploy
+    - name: 3-安装依赖
+      run: pnpm install
+    - name: 4-编译
+      run: pnpm run build
+    - name: 5-将代码上传到gh-page分支
       uses: JamesIves/github-pages-deploy-action@v4
       with:
         folder: dist
